@@ -1,0 +1,29 @@
+<%- include('header') -%>
+
+<form action="/about" method="POST"><button class="about">?</button></form>
+
+<div class="box" id="heading">
+    <h1><%= listTitle %></h1>
+</div>
+
+<div class="box">
+    <% for(let item of newListItems){ %>
+
+    <div class="item">
+        <input type="checkbox">
+        <p><%= item %></p>
+        <form action="/del" method="POST" name="<%= item %>">
+            <button type="submit" class="del-btn" name="deleteBtn"
+                value=<%= newListItems.indexOf(item) %>>&times</button>
+        </form>
+    </div>
+    <%  } %>
+
+
+    <form class=" item" action="/" method="post">
+        <input type="text" name="newItem" placeholder="Add new item" maxlength="20" autofocus autocomplete="off">
+        <button type=" submit" name="list" value=<%= listTitle %>>+</button>
+    </form>
+</div>
+
+<%- include('footer') -%>

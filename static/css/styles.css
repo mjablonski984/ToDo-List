@@ -1,0 +1,167 @@
+:root {
+  --color-main: #455a64;
+  --color-light: #f3f3f3;
+  --color-dark: #00204a;
+  font-size: 16px;
+}
+
+html {
+  background-color: var(--color-light);
+  min-height: 100vh;
+  font-family: Tahoma, Verdana, sans-serif;
+}
+
+/* Heading*/
+
+h1 {
+  color: var(--color-light);
+  padding: 0.66rem;
+}
+
+#heading {
+  background-color: var(--color-main);
+  text-align: center;
+}
+
+/* Box */
+
+.box {
+  max-width: 25rem;
+  margin: 3rem auto;
+  background: #fff;
+  border-radius: 5px;
+  box-shadow: 5px 5px 15px -5px rgba(0, 0, 0, 0.3);
+}
+
+/* Items */
+
+.item {
+  min-height: 4.25rem;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid var(--color-light);
+  position: relative;
+}
+
+.item:last-child {
+  border-bottom: 0;
+}
+
+input:checked + p {
+  text-decoration: line-through;
+  text-decoration-color: var(--color-main);
+}
+
+input[type='checkbox'] {
+  cursor: pointer;
+  margin: 1.25rem;
+}
+
+p {
+  margin: 0;
+  padding: 1.25rem;
+  font-size: 1.25rem;
+  font-weight: 200;
+  color: var(--color-dark);
+}
+/* Form: Input field and add button */
+
+form {
+  text-align: center;
+  margin-left: 1.25rem;
+}
+
+form.item {
+  margin-bottom: 5rem;
+}
+button {
+  min-height: 3rem;
+  width: 3rem;
+  font-size: 1.75rem;
+  padding-bottom: 6px;
+  border: 2px solid var(--color-main);
+  border-radius: 50%;
+  background-color: #fff;
+  color: var(--color-dark);
+  cursor: pointer;
+  outline: none;
+}
+
+button:hover {
+  background-color: var(--color-main);
+  color: var(--color-light);
+}
+
+input[type='text'] {
+  height: 3.5rem;
+  top: 10px;
+  font-size: 1.25rem;
+  font-weight: 200;
+  width: 83%;
+  border: none;
+  text-align: center;
+  background: transparent;
+}
+
+input[type='text']:focus {
+  outline: none;
+  box-shadow: inset 0 -2px 0 0 var(--color-main);
+}
+
+/* Delete btn */
+
+.del-btn {
+  background-color: transparent;
+  color: var(--color-main);
+  border: none;
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.del-btn:hover {
+  background-color: transparent;
+  color: #b71c1c;
+}
+
+/* About */
+
+form[action='/about'] {
+  max-width: 4rem;
+  margin: 1rem 1rem 0 auto;
+}
+
+form[action='/about'] button {
+  background-color: var(--color-light);
+  color: var(--color-main);
+}
+
+form[action='/about'] button:hover {
+  background-color: var(--color-main);
+  color: var(--color-light);
+}
+
+.about-info {
+  max-width: 50%;
+  margin: 30vh auto;
+  text-align: center;
+  color: var(--color-dark);
+}
+
+.about-info button {
+  margin: 2rem auto 1rem;
+}
+
+/* Footer */
+
+footer {
+  color: var(--color-dark);
+  text-align: center;
+}
+
+@media (min-width: 1200px) {
+  :root {
+    font-size: 20px;
+  }
+}
