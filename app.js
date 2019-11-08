@@ -1,36 +1,135 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const date = require(__dirname + '/static/js/date.js');
+const mongoose = require('mongoose');
+const _ = require('lodash');
+
+const date = require(__dirname + '/date.js');
+const day = date.getDate();
 
 const app = express();
-const items = ['Send an email'];
 
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.static('static'));
+app.use(express.static('public'));
 app.set('view engine', 'ejs');
+
+// Connect to mongoDB
+mongoose.connect('mongodb://localhost:27017/todolistDB', {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useFindAndModify: false
+});
+
+// Schema for list items
+const itemsSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: true
+  }
+});
+
+// Model for list items
+const Item = mongoose.model('Item', itemsSchema);
+
+// Create default 'Item' objects and add to an array
+const item1 = new Item({ name: 'Welcome' });
+const item2 = new Item({ name: 'To add an item press +' });
+const item3 = new Item({ name: '<- Press to delete an item' });
+
+const defaultItems = [item1, item2, item3];
+
+// Schema (object) for a custom lists
+const listSchema = {
+  name: String,
+  items: [itemsSchema]
+};
+// Model for a custom lists
+const List = mongoose.model('List', listSchema);
+
+// Routes
 
 app.get('/', (req, res) => {
   const day = date.getDate();
-  res.render('list', { listTitle: day, newListItems: items });
+
+  // Find all items in collection; if collection is empty insert default items
+  Item.find({}, (err, items) => {
+    if (items.length === 0) {
+      Item.insertMany(defaultItems, err => {
+        !err ? console.log('Added default items...') : console.log(err);
+        res.redirect('/');
+      });
+    } else {
+      !err
+        ? res.render('list', { listTitle: 'Today', newListItems: items, day: day })
+        : console.log(err); //add .name to list item <p> in list.ejs
+    }
+  });
+});
+
+app.get('/:customList', (req, res) => {
+  const customListName = _.capitalize(req.params.customList);
+
+  // If custom list exists get the list else create a new list
+  List.findOne({ name: customListName }, (err, foundList) => {
+    if (!err) {
+      if (!foundList) {
+        // Create a new list
+        const list = new List({ name: customListName, items: defaultItems });
+        // Save new list to list collection
+        list.save();
+        res.redirect('/' + customListName);
+      } else {
+        // Show existing list
+        res.render('list', { listTitle: foundList.name, newListItems: foundList.items, day: day });
+      }
+    }
+  });
 });
 
 app.post('/', (req, res) => {
-  let item = req.body.newItem;
+  const itemName = req.body.newItem;
+  const listName = req.body.list;
 
-  if (item.length === 0 || item.length > 20) {
+  const item = new Item({ name: itemName });
+  // Home directory list
+  if (listName === 'Today') {
+    item.save();
     res.redirect('/');
-  } else items.push(item);
-  res.redirect('/');
+  } else {
+    // Find a list with corresponding name in 'lists' collection and add item
+    List.findOne({ name: listName }, (err, foundList) => {
+      foundList.items.push(item);
+      foundList.save();
+      res.redirect('/' + listName);
+    });
+  }
 });
 
-app.post('/del', (req, res) => {
-  let itemNumber = req.body.deleteBtn;
-  items.splice(itemNumber, 1);
-  res.redirect('/');
+app.post('/delete', (req, res) => {
+  const checkedId = req.body.checkbox;
+  const listName = req.body.listName;
+
+  if (listName === 'Today') {
+    // Delete from the main list
+    Item.findByIdAndDelete(checkedId, err =>
+      !err ? console.log(`${checkedId} deleted`) : console.log(err)
+    );
+    res.redirect('/');
+  } else {
+    // Find a list, them if id matches ,remove item from an array with mongoDB $pull operator
+    List.findOneAndUpdate(
+      { name: listName },
+      { $pull: { items: { _id: checkedId } } },
+      (err, foundList) => {
+        !err ? res.redirect('/' + listName) : console.log(err);
+      }
+    );
+  }
 });
 
-app.post('/about', (req, res) => {
+app.get('/about', (req, res) => {
   res.render('about');
 });
 
-app.listen(3000, () => console.log('Listening on port 3000'));
+app.listen(3000, () => {
+  console.log('Server started on port 3000');
+});
