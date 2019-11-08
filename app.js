@@ -3,13 +3,13 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const _ = require('lodash');
 
-const date = require(__dirname + '/date.js');
+const date = require(__dirname + '/static/js/date.js');
 const day = date.getDate();
 
 const app = express();
 
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.static('public'));
+app.use(express.static('static'));
 app.set('view engine', 'ejs');
 
 // Connect to mongoDB
@@ -68,7 +68,7 @@ app.get('/', (req, res) => {
 app.get('/:customList', (req, res) => {
   const customListName = _.capitalize(req.params.customList);
 
-  // If custom list exists get the list else create a new list
+  // If custom list exists get the list, else create a new list
   List.findOne({ name: customListName }, (err, foundList) => {
     if (!err) {
       if (!foundList) {
@@ -126,7 +126,7 @@ app.post('/delete', (req, res) => {
   }
 });
 
-app.get('/about', (req, res) => {
+app.post('/about', (req, res) => {
   res.render('about');
 });
 
