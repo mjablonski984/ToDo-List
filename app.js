@@ -13,7 +13,7 @@ app.use(express.static('static'));
 app.set('view engine', 'ejs');
 
 // Connect to mongoDB
-mongoose.connect('mongodb+srv://admin-mj:<PASSWORD>@cluster0-s0ach.mongodb.net/todolistDB', {
+mongoose.connect('mongodb+srv://admin-mj:mjtest@cluster0-s0ach.mongodb.net/todolistDB', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   useFindAndModify: false
