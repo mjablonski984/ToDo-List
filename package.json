@@ -8,6 +8,9 @@
   },
   "author": "MJ",
   "license": "ISC",
+  "engines": {
+    "node": "12.9.0"
+  },
   "dependencies": {
     "body-parser": "^1.18.3",
     "ejs": "^2.6.1",
