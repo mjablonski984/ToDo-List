@@ -1,33 +1,33 @@
 :root {
   --color-light: #f3f3f3;
-  --color-dark: #00204a;
+  --color-dark: #1a237e;
   font-size: 16px;
 }
 
 html {
   background-color: var(--color-light);
   min-height: 100vh;
+  text-align: center;
   font-family: Tahoma, Verdana, sans-serif;
 }
 
 /* Heading*/
 
 h1 {
-  padding: 0.66rem;
+  padding: 0.6rem;
   margin: 0 auto;
 }
 
 #heading {
   color: var(--color-light);
   background-color: var(--color-dark);
-  text-align: center;
 }
 
 /* Box */
 
 .box {
   max-width: 25rem;
-  margin: 2.5rem auto;
+  margin: 1.75rem auto;
   background: #fff;
   border-radius: 5px;
   box-shadow: 5px 5px 15px -5px rgba(0, 0, 0, 0.3);
@@ -37,32 +37,30 @@ h1 {
   background-color: var(--color-dark);
   color: var(--color-light);
   margin-bottom: 0;
-  text-align: center;
   margin: 0 auto;
 }
+
 /* Items */
 
 .item {
   min-height: 4.25rem;
   display: flex;
   align-items: center;
-  text-align: center;
   border-bottom: 1px solid var(--color-light);
-  position: relative;
 }
 
 .item:last-child {
   border-bottom: 0;
 }
 
-input:checked + p {
-  text-decoration: line-through;
-  text-decoration-color: var(--color-dark);
-}
-
 input[type='checkbox'] {
   cursor: pointer;
   margin: 1.25rem;
+}
+
+input:checked + p {
+  text-decoration: line-through;
+  text-decoration-color: var(--color-dark);
 }
 
 p {
@@ -74,10 +72,6 @@ p {
 }
 /* Form: Input field and add button */
 
-form {
-  text-align: center;
-}
-
 form.item {
   margin-left: 1.25rem;
   margin-bottom: 5rem;
@@ -86,7 +80,6 @@ button {
   min-height: 3rem;
   width: 3rem;
   font-size: 1.75rem;
-  padding-bottom: 6px;
   border: 2px solid var(--color-dark);
   border-radius: 50%;
   background-color: #fff;
@@ -102,7 +95,6 @@ button:hover {
 
 input[type='text'] {
   height: 3.5rem;
-  top: 10px;
   font-size: 1.25rem;
   font-weight: 200;
   width: 83%;
@@ -137,19 +129,13 @@ form[action='/about'] button:hover {
   padding: 1rem;
   max-width: 50%;
   margin: 25vh auto;
-  text-align: center;
   color: var(--color-dark);
-}
-
-.about-info button {
-  padding: 1rem auto;
 }
 
 /* Footer */
 
 footer {
   color: var(--color-dark);
-  text-align: center;
 }
 
 /* Media */

@@ -13,7 +13,7 @@ app.use(express.static('static'));
 app.set('view engine', 'ejs');
 
 // Connect to mongoDB
-mongoose.connect('mongodb://localhost:27017/todolistDB', {
+mongoose.connect('mongodb+srv://admin-mj:mjtest@cluster0-s0ach.mongodb.net/todolistDB', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   useFindAndModify: false
@@ -31,11 +31,10 @@ const itemsSchema = new mongoose.Schema({
 const Item = mongoose.model('Item', itemsSchema);
 
 // Create default 'Item' objects and add to an array
-const item1 = new Item({ name: 'Welcome' });
-const item2 = new Item({ name: 'To add an item press +' });
-const item3 = new Item({ name: '<- Press to delete an item' });
+const item1 = new Item({ name: 'To add an item press +' });
+const item2 = new Item({ name: '<- Press to delete an item' });
 
-const defaultItems = [item1, item2, item3];
+const defaultItems = [item1, item2];
 
 // Schema (object) for a custom lists
 const listSchema = {
